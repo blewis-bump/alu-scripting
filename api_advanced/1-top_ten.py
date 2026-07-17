@@ -7,7 +7,7 @@ def top_ten(subreddit):
     """Print the titles of the first 10 hot posts, or None if invalid."""
     url = "https://www.reddit.com/r/{}/hot.json".format(subreddit)
     headers = {
-        "User-Agent": "python3:alu.api.advanced:v1.0.0 (by /u/blewis-bump)"
+        "User-Agent": "python3:alu.api.advanced:v1.0.0 (by /u/ixhm-brix)"
     }
     params = {"limit": 10}
     response = requests.get(
