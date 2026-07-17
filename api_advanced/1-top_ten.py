@@ -1,31 +1,26 @@
 #!/usr/bin/python3
-"""Print the titles of the first 10 hot posts of a subreddit."""
+"""Find top 10 hot posts of subreddit from reddit API"""
+
 import requests
 
 
 def top_ten(subreddit):
-    """Print the titles of the first 10 hot posts, or None if invalid."""
     url = "https://www.reddit.com/r/{}/hot.json".format(subreddit)
-    headers = {
-        "User-Agent": "python:alu.api:v1.0 (by /u/blewis-bump)"
-    }
+    user_agent = "macos:com.intranet.apistuff:v1.0.0(by /u/PlasticDrummer2706)"
+    headers = {"User-Agent": user_agent}
 
-    response = requests.get(
-        url,
-        headers=headers,
-        params={"limit": 10},
-        allow_redirects=False
-    )
+    response = requests.get(url, headers=headers, allow_redirects=False)
 
-    if response.status_code == 404:
+    if response.status_code == 200:
+        parsed_data = response.json()
+        hot_posts = parsed_data["data"]["children"]
+
+        for post in hot_posts[:10]:
+
+            print(post["data"]["title"])
+    else:
         print(None)
-        return
 
-    if response.status_code != 200:
-        print(None)
-        return
 
-    posts = response.json().get("data").get("children")
-
-    for post in posts:
-        print(post.get("data").get("title"))
+if __name__ == "__main__":
+    top_ten("programming")
